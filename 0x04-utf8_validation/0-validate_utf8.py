@@ -1,36 +1,37 @@
-):
+
+d to determine if given data represents valid UTF-8 encoding
+Prototype: def validUTF8(data)
+Returns True if data is valid UTF-8 encoding, else return False
+Dataset can contain multiple characters
+Data will represent a list of integers
+"""
+
+
+def validUTF8(data):
         """
-            Method that determines if a given data set represents a valid
-                UTF-8 encoding.
-                    """
-                        number_bytes = 0
+            Prototype: def validUTF8(data)
+                Returns True if data is valid UTF-8 encoding
+                    else return False
+                        """
+                            count = 0
 
-                            mask_1 = 1 << 7
-                                mask_2 = 1 << 6
+                                for bit in data:
+                                        binary = bin(bit).replace('0b', '').rjust(8, '0')[-8:]
+                                                if count == 0:
+                                                            if binary.startswith('110'):
+                                                                            count = 1
+                                                                                        if binary.startswith('1110'):
+                                                                                                        count = 2
+                                                                                                                    if binary.startswith('11110'):
+                                                                                                                                    count = 3
+                                                                                                                                                if binary.startswith('10'):
+                                                                                                                                                                return False
+                                                                                                                                                                        else:
+                                                                                                                                                                                    if not binary.startswith('10'):
+                                                                                                                                                                                                    return False
+                                                                                                                                                                                                                count -= 1
 
-                                    for i in data:
+                                                                                                                                                                                                                    if count != 0:
+                                                                                                                                                                                                                            return False
 
-                                                mask_byte = 1 << 7
-
-                                                        if number_bytes == 0:
-
-                                                                        while mask_byte & i:
-                                                                                            number_bytes += 1
-                                                                                                            mask_byte = mask_byte >> 1
-
-                                                                                                                        if number_bytes == 0:
-                                                                                                                                            continue
-
-                                                                                                                                                    if number_bytes == 1 or number_bytes > 4:
-                                                                                                                                                                        return False
-
-                                                                                                                                                                            else:
-                                                                                                                                                                                            if not (i & mask_1 and not (i & mask_2)):
-                                                                                                                                                                                                                    return False
-
-                                                                                                                                                                                                                        number_bytes -= 1
-
-                                                                                                                                                                                                                            if number_bytes == 0:
-                                                                                                                                                                                                                                        return True
-
-                                                                                                                                                                                                                                        return False
+                                                                                                                                                                                                                                return True
